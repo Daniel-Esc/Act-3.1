@@ -13,6 +13,7 @@ class BST
 		void remove(int data);
 		void print(int tipo);	
 		int size();
+		int height();
 	private:
 		NodeT *root;
 		int howManyChildren(NodeT *r);
@@ -23,6 +24,7 @@ class BST
 		void postOrden(NodeT *r);
 		void destruye_Helper(NodeT *r);
 		int size_Helper(NodeT *r);
+		int height_Helper(NodeT *r);
 };
 
 BST::BST(){
@@ -245,8 +247,21 @@ int BST::size_Helper(NodeT *r){
 	}
 }
 
+int BST::height(){
+	return height_Helper(root);
+}
 
-
+int BST::height_Helper(NodeT *r){
+	int left_height = 0, right_heigth = 0;
+	if(r != nullptr && (r->getLeft() != nullptr || r->getRight() != nullptr)){
+		left_height += 1 + height_Helper(r->getLeft());
+		right_heigth += 1 + height_Helper(r->getRight());
+		return (left_height > right_heigth) ? left_height: right_heigth;
+	}
+	else{
+		return 0;
+	}
+}
 
 
 

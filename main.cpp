@@ -5,6 +5,7 @@ using namespace std;
 #include "BST.h"
 
 int main(){
+    
     BST miArbol1, miArbol2, miArbol3, miArbolVacio, miArbolDerecho, miArbolIzquierdo, miArbolUno, miArbolMixto1, miArbolMixto2, miArbolMixto3, arbolProfe;
 
     miArbol1.add(19);
@@ -22,6 +23,8 @@ int main(){
     miArbol1.print(2);
     miArbol1.print(3);
     miArbol1.print(4);
+
+    cout << miArbol1.height() << endl;
 
     cout << "-----------------------" << endl;
 
@@ -41,6 +44,8 @@ int main(){
     miArbol2.print(3);
     miArbol2.print(4);
 
+    cout << miArbol2.height() << endl;
+
     cout << "-----------------------" << endl;
 
     miArbol3.add(55);
@@ -59,12 +64,16 @@ int main(){
     miArbol3.print(3);
     miArbol3.print(4);
 
+    cout << miArbol3.height() << endl;
+
     cout << "-----------------------" << endl;
 
     miArbolVacio.print(1);
     miArbolVacio.print(2);
     miArbolVacio.print(3);
     miArbolVacio.print(4);
+
+    cout << miArbolVacio.height() << endl;
 
     cout << "-----------------------" << endl;
 
@@ -84,6 +93,8 @@ int main(){
     miArbolDerecho.print(3);
     miArbolDerecho.print(4);
 
+    cout << miArbolDerecho.height() << endl;
+
     cout << "-----------------------" << endl;
 
     miArbolIzquierdo.add(10);
@@ -102,6 +113,8 @@ int main(){
     miArbolIzquierdo.print(3);
     miArbolIzquierdo.print(4);
 
+    cout << miArbolIzquierdo.height() << endl;
+
     cout << "-----------------------" << endl;
 
     miArbolUno.add(1);
@@ -110,6 +123,8 @@ int main(){
     miArbolUno.print(2);
     miArbolUno.print(3);
     miArbolUno.print(4);
+
+    cout << miArbolUno.height() << endl;
 
     cout << "-----------------------" << endl;
 
@@ -124,6 +139,8 @@ int main(){
     miArbolMixto1.print(3);
     miArbolMixto1.print(4);
 
+    cout << miArbolMixto1.height() << endl;
+
     cout << "-----------------------" << endl;
 
     miArbolMixto2.add(9);
@@ -137,6 +154,8 @@ int main(){
     miArbolMixto2.print(3);
     miArbolMixto2.print(4);
 
+    cout << miArbolMixto2.height() << endl;
+
     cout << "-----------------------" << endl;
 
     miArbolMixto3.add(5);
@@ -149,6 +168,8 @@ int main(){
     miArbolMixto3.print(2);
     miArbolMixto3.print(3);
     miArbolMixto3.print(4);
+
+    cout << miArbolMixto3.height() << endl;
 
     cout << "-----------------------" << endl;
 
@@ -167,4 +188,7 @@ int main(){
     arbolProfe.print(2);
     arbolProfe.print(3);
     arbolProfe.print(4);
+
+    cout << arbolProfe.height() << endl;
+
 }
