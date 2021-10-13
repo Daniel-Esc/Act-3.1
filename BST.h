@@ -1,6 +1,7 @@
-// Matrícula:
-// Nomber:
+// Matrícula: A00831289
+// Nomber: Daniel Evaristo Escalera
 #include "NodeT.h"
+#include "queue.h"
 
 class BST
 {
@@ -174,10 +175,12 @@ void BST::remove(int data){
 	}
 }
 
+// Complejidad: Mejor caso O(1) Peor caso O(n)
 // Tipo:
 // 1 : PreOrden
 // 2 : InOrden
 // 3 : PostOrden
+// 4 : NivelPorNivel
 void BST::print(int tipo){
 	switch (tipo){
 		case 1:	preOrden(root);
@@ -186,7 +189,21 @@ void BST::print(int tipo){
 				break;
 		case 3: postOrden(root);
 				break;
-
+		case 4: if(root != nullptr){ // Si el arbol tiene datos
+			// Se crea una fila y se introduce el nodo raíz
+			queue<NodeT*> fila;
+			fila.push(root);
+			while (fila.empty() == false){ // Mientras la fila no este vacía
+				cout << fila.front()->getData() << " "; // Imprimir nodo
+				if(fila.front()->getLeft() != nullptr){ // Si el nodo tiene hijos agregarlos a la fila (Caso izquierdo)
+					fila.push(fila.front()->getLeft());
+				}
+				if(fila.front()->getRight() != nullptr){ // Si el nodo tiene hijos agregarlos a la fila (Caso derecho)
+					fila.push(fila.front()->getRight());
+				}
+				fila.pop(); // Borrar el padre
+			}
+		}
 	}
 	cout << endl;
 }
