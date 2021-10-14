@@ -26,6 +26,10 @@ int main(){
 
     cout << miArbol1.height() << endl;
 
+    miArbol1.ancestors(19);
+    miArbol1.ancestors(1);
+    miArbol1.ancestors(14);
+
     cout << "-----------------------" << endl;
 
     miArbol2.add(25);
@@ -45,6 +49,10 @@ int main(){
     miArbol2.print(4);
 
     cout << miArbol2.height() << endl;
+
+    miArbol2.ancestors(25);
+    miArbol2.ancestors(1);
+    miArbol2.ancestors(22);
 
     cout << "-----------------------" << endl;
 
@@ -66,6 +74,10 @@ int main(){
 
     cout << miArbol3.height() << endl;
 
+    miArbol3.ancestors(55);
+    miArbol3.ancestors(1);
+    miArbol3.ancestors(42);
+
     cout << "-----------------------" << endl;
 
     miArbolVacio.print(1);
@@ -74,6 +86,10 @@ int main(){
     miArbolVacio.print(4);
 
     cout << miArbolVacio.height() << endl;
+
+    miArbolVacio.ancestors(0);
+    miArbolVacio.ancestors(1);
+    miArbolVacio.ancestors(14);
 
     cout << "-----------------------" << endl;
 
@@ -95,6 +111,10 @@ int main(){
 
     cout << miArbolDerecho.height() << endl;
 
+    miArbolDerecho.ancestors(1);
+    miArbolDerecho.ancestors(11);
+    miArbolDerecho.ancestors(8);
+
     cout << "-----------------------" << endl;
 
     miArbolIzquierdo.add(10);
@@ -115,6 +135,10 @@ int main(){
 
     cout << miArbolIzquierdo.height() << endl;
 
+    miArbolIzquierdo.ancestors(10);
+    miArbolIzquierdo.ancestors(11);
+    miArbolIzquierdo.ancestors(3);
+
     cout << "-----------------------" << endl;
 
     miArbolUno.add(1);
@@ -125,6 +149,10 @@ int main(){
     miArbolUno.print(4);
 
     cout << miArbolUno.height() << endl;
+
+    miArbolUno.ancestors(1);
+    miArbolUno.ancestors(2);
+    miArbolUno.ancestors(1);
 
     cout << "-----------------------" << endl;
 
@@ -191,4 +219,7 @@ int main(){
 
     cout << arbolProfe.height() << endl;
 
+    arbolProfe.ancestors(21);
+    arbolProfe.ancestors(1);
+    arbolProfe.ancestors(29);
 }

@@ -9,6 +9,7 @@ class BST
 		BST();
 		~BST();
 		bool search(int data);
+		void ancestors(int data);
 		void add(int data);
 		void remove(int data);
 		void print(int tipo);	
@@ -87,6 +88,30 @@ bool BST::search(int data){
 		curr = (curr->getData() > data) ? curr->getLeft() : curr->getRight();
 	}
 	return false; // Por aquí se sale si root es nullptr o no esta el dato
+}
+
+void BST::ancestors(int data){
+	NodeT *curr = root;
+	if(curr != nullptr){
+		if (curr->getData() != data){
+		while (curr != nullptr){
+			cout << curr->getData() << endl;
+			if(curr->getData() != data){
+				curr = (curr->getData() > data) ? curr->getLeft() : curr->getRight();
+			}
+			else{
+				return;
+			}
+		}
+		cout << "DATO INEXISTENTE" << endl;
+		}
+		else{
+			cout << "SIN ANCESTROS" << endl;
+		}
+	}
+	else{
+		cout << "DATO INEXISTENTE" << endl;
+	}
 }
 
 void BST::add(int data){
