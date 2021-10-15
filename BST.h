@@ -1,7 +1,9 @@
 // Matrícula: A00831289
 // Nomber: Daniel Evaristo Escalera
+#include <queue>
+#include <stack>
+
 #include "NodeT.h"
-#include "queue.h"
 
 class BST
 {
@@ -9,12 +11,13 @@ class BST
 		BST();
 		~BST();
 		bool search(int data);
-		void ancestors(int data);
 		void add(int data);
 		void remove(int data);
 		void print(int tipo);	
 		int size();
 		int height();
+		void ancestors(int data);
+		int whatLevelAmI(int data);
 	private:
 		NodeT *root;
 		int howManyChildren(NodeT *r);
@@ -44,6 +47,7 @@ void BST::destruye_Helper(NodeT *r){
 	}
 }
 
+// Complejidad: O(n)
 int BST::howManyChildren(NodeT *r){
 	int cont = 0;
 	if (r->getLeft() != nullptr){
@@ -56,6 +60,7 @@ int BST::howManyChildren(NodeT *r){
 }
 
 // Menor de los Mayores;
+// Complejidad: O(height)
 int BST::succ(NodeT *r){
 	NodeT *curr = r->getRight();
 	while (curr->getLeft() != nullptr){
@@ -65,6 +70,7 @@ int BST::succ(NodeT *r){
 }
 
 // Mayor de los Menores
+// Complejidad: O(height)
 int BST::pred(NodeT *r){
 	NodeT *curr = r->getLeft();
 	while (curr->getRight() != nullptr){
@@ -73,6 +79,7 @@ int BST::pred(NodeT *r){
 	return curr->getData();
 }
 
+// Complejidad: O(height)
 bool BST::search(int data){
 	NodeT *curr = root;
 	while (curr != nullptr){
@@ -90,30 +97,7 @@ bool BST::search(int data){
 	return false; // Por aquí se sale si root es nullptr o no esta el dato
 }
 
-void BST::ancestors(int data){
-	NodeT *curr = root;
-	if(curr != nullptr){
-		if (curr->getData() != data){
-		while (curr != nullptr){
-			cout << curr->getData() << endl;
-			if(curr->getData() != data){
-				curr = (curr->getData() > data) ? curr->getLeft() : curr->getRight();
-			}
-			else{
-				return;
-			}
-		}
-		cout << "DATO INEXISTENTE" << endl;
-		}
-		else{
-			cout << "SIN ANCESTROS" << endl;
-		}
-	}
-	else{
-		cout << "DATO INEXISTENTE" << endl;
-	}
-}
-
+// Complejidad: O(height)
 void BST::add(int data){
 	if (root == nullptr){
 		root = new NodeT(data);
@@ -138,6 +122,7 @@ void BST::add(int data){
 	}
 }
 
+// Complejidad: O(height)
 void BST::remove(int data){
 	NodeT *curr = root;
 	NodeT *parent = nullptr;
@@ -235,6 +220,7 @@ void BST::print(int tipo){
 	cout << endl;
 }
 
+// Complejidad: O(n)
 void BST::preOrden(NodeT *r){
 	if (r != nullptr){
 		cout << r->getData() << " ";
@@ -243,6 +229,7 @@ void BST::preOrden(NodeT *r){
 	}
 }
 
+// Complejidad: O(n)
 void BST::inOrden(NodeT *r){
 	if (r != nullptr){
 		inOrden(r->getLeft());
@@ -251,6 +238,7 @@ void BST::inOrden(NodeT *r){
 	}
 }
 
+// Complejidad: O(n)
 void BST::postOrden(NodeT *r){
 	if (r != nullptr){
 		postOrden(r->getLeft());
@@ -259,10 +247,12 @@ void BST::postOrden(NodeT *r){
 	}
 }
 
+// Complejidad: O(n)
 int BST::size(){
 	return size_Helper(root);
 }
 
+// Complejidad: O(n)
 int BST::size_Helper(NodeT *r){
 	if (r != nullptr){
 		return 1 + size_Helper(r->getLeft()) + size_Helper(r->getRight());
@@ -272,27 +262,65 @@ int BST::size_Helper(NodeT *r){
 	}
 }
 
-int BST::height(){
+int BST::height(){ // Para determinar la altura del albor se llama al helper con la raíz como parámetro
 	return height_Helper(root);
 }
 
-int BST::height_Helper(NodeT *r){
-	int left_height = 0, right_heigth = 0;
-	if(r != nullptr && (r->getLeft() != nullptr || r->getRight() != nullptr)){
-		left_height += 1 + height_Helper(r->getLeft());
-		right_heigth += 1 + height_Helper(r->getRight());
-		return (left_height > right_heigth) ? left_height: right_heigth;
+//Complejidad: Mejor caso O(1) Peor caso O(n)
+int BST::height_Helper(NodeT *r){ 
+	int left_height = 0, right_heigth = 0; // Se crean variables para cada rama que sale del nodo
+	if(r != nullptr){ // Si el valor es nulo regresa 0
+		left_height += 1 + height_Helper(r->getLeft()); // Se obtiene la altura de la izquierda de manera recursiva
+		right_heigth += 1 + height_Helper(r->getRight()); // Se obtiene la altura de la derecha de manera recursiva
+		return (left_height > right_heigth) ? left_height: right_heigth; // Se regresa el mayor valor
 	}
 	else{
 		return 0;
 	}
 }
 
+//Complejidad: Mejor caso O(1) Peor caso O(n)
+void BST::ancestors(int data){
+	stack<NodeT*> ancestros; // Se crea un stack para guardar los ancestros
+	NodeT *curr = root;
+	if(curr != nullptr){ // Se comprueba que el arbol tiene datos
+		while (curr != nullptr && curr->getData() != data){ // Mientras no se llegue al final del arbol o al dato buscado
+			ancestros.push(curr); // Se guarda el dato actual como ancestro en el fondo del stack
+			curr = (curr->getData() > data) ? curr->getLeft() : curr->getRight(); // Cambiar de nodo dependiendo del valor del dato respecto al valor actual
+		}
+		if(ancestros.empty()){ // Si al salir del while el stack esta vacío, significa que se buscó el primer nodo el cual no tiene ancestros
+			cout << "SIN ANCESTROS" << endl;
+		}
+		else if(curr == nullptr){ // Si al salir no se encontró el dato no se despliegan los ancestros y se notifica
+			cout << "DATO INEXISTENTE" << endl;
+		}
+		else{ // Si se encontró el dato se despliegan y borran uno a uno los ancestros en el stack
+			while (ancestros.empty() == false){
+				cout << ancestros.top()->getData() << endl;
+				ancestros.pop();
+			}
+		}
+	}
+	else{
+		cout << "DATO INEXISTENTE" << endl;
+	}
+}
 
-
-
-
-
+//Complejidad: Mejor caso O(1) Peor caso O(n)
+int BST::whatLevelAmI(int data){  // Recibe el dato al cual se debe buscar su nivel
+	NodeT *curr = root;
+	int contador = 0; // Inicializar contador
+	while (curr != nullptr &&  curr->getData() != data){ // Mientras no encuentre el final del arbol o el dato a buscar
+		curr = (curr->getData() > data) ? curr->getLeft() : curr->getRight(); // Cambiar de nodo dependiendo del valor del dato respecto al valor actual
+		contador++; // Aumentar contador
+	}
+	if(curr == nullptr){ // Si el dato no se encuentra en el arbol regresar -1
+		return -1;
+	}
+	else{ // Si se encuentra el dato se regresa el contador
+		return contador;
+	}
+}
 
 
 
